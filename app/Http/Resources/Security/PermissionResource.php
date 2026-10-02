@@ -9,6 +9,9 @@ use Spatie\Permission\Models\Permission;
 
 /**
  * @mixin Permission
+ *
+ * @property string|null $description
+ * @property string|null $module_key
  */
 class PermissionResource extends JsonResource
 {

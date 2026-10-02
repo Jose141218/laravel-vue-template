@@ -9,6 +9,10 @@ use Spatie\Permission\Models\Role;
 
 /**
  * @mixin Role
+ *
+ * @property string|null $description
+ * @property int|null $permissions_count
+ * @property int|null $users_count
  */
 class RoleResource extends JsonResource
 {

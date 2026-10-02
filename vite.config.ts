@@ -7,6 +7,10 @@ import { bunny } from 'laravel-vite-plugin/fonts';
 import { defineConfig } from 'vite';
 import vueDevTools from 'vite-plugin-vue-devtools';
 
+if (process.env.VITEST) {
+    process.env.LARAVEL_BYPASS_ENV_CHECK = '1';
+}
+
 export default defineConfig({
     plugins: [
         laravel({

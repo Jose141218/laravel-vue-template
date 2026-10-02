@@ -21,7 +21,7 @@ trait HasDateFormats
             $date = Carbon::parse($date);
         }
 
-        $date = $date->locale('es');
+        $date->locale('es');
 
         return [
             'raw' => $withTime ? $date->toDateTimeString() : $date->toDateString(),

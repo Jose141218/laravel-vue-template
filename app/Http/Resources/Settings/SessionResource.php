@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Jenssegers\Agent\Agent;
 
+/**
+ * @property string $id
+ * @property string|null $user_agent
+ * @property string|null $ip_address
+ * @property int $last_activity
+ */
 class SessionResource extends JsonResource
 {
     /**

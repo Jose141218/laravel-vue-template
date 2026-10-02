@@ -1,0 +1,69 @@
+name: "🐛 Bug Report"
+description: File a bug report or unexpected behavior in the starter template
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report an issue! Please provide as much relevant detail as possible.
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: Describe the problem...
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: What steps did you take to encounter the problem?
+      placeholder: |
+        1. Run `...`
+        2. Click on `...`
+        3. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: A clear description of what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or Error Logs
+      description: Paste terminal output, browser console logs, or drag & drop screenshots here.
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      options:
+        - Windows
+        - macOS
+        - Linux (Ubuntu/Debian/Fedora/Arch)
+        - Docker / Container
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Local Environment
+      description: e.g., Laragon, Laravel Herd, Valet, Docker, php artisan serve
+      placeholder: Laragon
+    validations:
+      required: false
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Verification Checklist
+      description: Please verify before submitting.
+      options:
+        - label: I have verified that this issue is reproducible on the latest `main` branch.
+          required: true
+        - label: I have searched existing issues and confirmed this is not a duplicate.
+          required: true

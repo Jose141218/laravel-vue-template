@@ -1,0 +1,11 @@
+packages:
+  - '.'
+
+minimumReleaseAge: 1440
+
+allowBuilds:
+  unrs-resolver: true
+  vue-demi: true
+
+publicHoistPattern:
+  - '@inertiajs/core'

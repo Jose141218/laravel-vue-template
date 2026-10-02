@@ -39,47 +39,55 @@
                     </td>
 
                     <td data-label="Acciones" class="text-right">
-                        <ActionGroup>
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                class="cursor-pointer h-8 w-8 text-muted-foreground hover:text-foreground"
-                                as-child
-                                title="Ver detalles del rol"
-                            >
-                                <Link
-                                    :href="route(`${routeName}show`, item.id)"
+                        <DropdownMenu>
+                            <DropdownMenuTrigger as-child>
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    class="cursor-pointer h-8 w-8 text-muted-foreground hover:text-foreground"
+                                    title="Acciones"
                                 >
-                                    <Eye class="h-4 w-4" />
-                                </Link>
-                            </Button>
+                                    <MoreHorizontal class="h-4 w-4" />
+                                    <span class="sr-only">Acciones</span>
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" class="w-48">
+                                <DropdownMenuItem as-child class="cursor-pointer">
+                                    <Link
+                                        :href="route(`${routeName}show`, item.id)"
+                                    >
+                                        <Eye class="mr-2 h-4 w-4" />
+                                        <span>Ver detalles</span>
+                                    </Link>
+                                </DropdownMenuItem>
 
-                            <Button
-                                v-if="canEdit"
-                                variant="ghost"
-                                size="icon"
-                                class="cursor-pointer h-8 w-8 text-muted-foreground hover:text-foreground"
-                                as-child
-                                title="Editar rol"
-                            >
-                                <Link
-                                    :href="route(`${routeName}edit`, item.id)"
+                                <DropdownMenuItem
+                                    v-if="canEdit"
+                                    as-child
+                                    class="cursor-pointer"
                                 >
-                                    <Pencil class="h-4 w-4" />
-                                </Link>
-                            </Button>
+                                    <Link
+                                        :href="route(`${routeName}edit`, item.id)"
+                                    >
+                                        <Pencil class="mr-2 h-4 w-4" />
+                                        <span>Editar rol</span>
+                                    </Link>
+                                </DropdownMenuItem>
 
-                            <Button
-                                v-if="item.name !== 'admin' && canDelete"
-                                variant="ghost"
-                                size="icon"
-                                class="cursor-pointer h-8 w-8 text-muted-foreground hover:text-destructive"
-                                title="Eliminar rol"
-                                @click="$emit('confirmDelete', item)"
-                            >
-                                <Trash2 class="h-4 w-4" />
-                            </Button>
-                        </ActionGroup>
+                                <DropdownMenuSeparator
+                                    v-if="item.name !== 'admin' && canDelete"
+                                />
+
+                                <DropdownMenuItem
+                                    v-if="item.name !== 'admin' && canDelete"
+                                    class="cursor-pointer text-destructive focus:text-destructive"
+                                    @click="$emit('confirmDelete', item)"
+                                >
+                                    <Trash2 class="mr-2 h-4 w-4" />
+                                    <span>Eliminar rol</span>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </td>
                 </tr>
             </tbody>
@@ -96,11 +104,17 @@
 
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { Eye, Pencil, Trash2 } from '@lucide/vue';
+import { Eye, MoreHorizontal, Pencil, Trash2 } from '@lucide/vue';
 import { computed } from 'vue';
-import ActionGroup from '@/components/common/ActionGroup.vue';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { TableEmpty, TableSkeleton } from '@/components/ui/table';
 import { useCan } from '@/composables/usePermissions';
 import type { Role } from '../interfaces';

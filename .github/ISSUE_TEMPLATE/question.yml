@@ -1,0 +1,22 @@
+name: "❓ Question / Support"
+description: Ask a question about configuring, extending, or using this template
+title: "[Question]: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Need guidance on extending or configuring the starter template? Ask here.
+  - type: textarea
+    id: question
+    attributes:
+      label: Your Question
+      description: What do you need help with?
+      placeholder: How can I configure...
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context & Attempts
+      description: What have you tried so far? Include code snippets or references to documentation.

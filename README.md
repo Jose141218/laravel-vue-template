@@ -164,7 +164,7 @@ Anyone extending or using this template only needs to modify `vite.config.ts` fo
 ```bash
 composer setup
 ```
-> Runs dependency installation, creates `.env`, generates app key, runs database migrations, and builds frontend assets.
+> Runs dependency installation, creates `.env`, generates app key, ensures SQLite database, runs migrations with initial seeders, and builds frontend assets.
 
 ### Start Development Server
 ```bash

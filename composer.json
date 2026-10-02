@@ -1,11 +1,17 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/vue-starter-kit",
+    "name": "jose141218/laravel-vue-template",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Production-ready starter template built with Laravel 13, Inertia v3, Vue 3, TypeScript, Tailwind CSS v4, and Spatie Permission v8.",
     "keywords": [
         "laravel",
-        "framework"
+        "vue3",
+        "inertiajs",
+        "typescript",
+        "tailwindcss-v4",
+        "starter-kit",
+        "screaming-architecture",
+        "spatie-permissions"
     ],
     "license": "MIT",
     "require": {
@@ -47,7 +53,8 @@
             "composer install",
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php artisan key:generate",
-            "@php artisan migrate --force",
+            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
+            "@php artisan migrate --seed --force",
             "pnpm install",
             "pnpm run build"
         ],

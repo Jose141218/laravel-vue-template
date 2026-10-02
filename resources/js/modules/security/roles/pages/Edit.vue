@@ -19,6 +19,7 @@
             :route-name="routeName"
             :modules="modules"
             :grouped-permissions="groupedPermissions"
+            submit-label="Guardar cambios"
             @submit="submit"
         />
     </ModuleLayout>

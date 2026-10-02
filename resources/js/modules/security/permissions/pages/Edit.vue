@@ -18,6 +18,7 @@
             :form="form"
             :route-name="routeName"
             :modules="modules"
+            submit-label="Guardar cambios"
             @submit="submit"
         />
     </ModuleLayout>

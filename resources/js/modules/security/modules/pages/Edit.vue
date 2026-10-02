@@ -13,7 +13,12 @@
             </template>
         </PageHeader>
 
-        <ModuleForm :form="form" :route-name="routeName" @submit="submit" />
+        <ModuleForm
+            :form="form"
+            :route-name="routeName"
+            submit-label="Guardar cambios"
+            @submit="submit"
+        />
     </ModuleLayout>
 </template>
 

@@ -26,13 +26,7 @@
                     </Button>
                     <Button type="submit" class="gap-2" :loading="form.processing">
                         <Save v-if="!form.processing" class="h-4 w-4" />
-                        <span>
-                            {{
-                                form.processing
-                                    ? 'Guardando...'
-                                    : 'Guardar Módulo'
-                            }}
-                        </span>
+                        <span>{{ submitLabel }}</span>
                     </Button>
                 </ActionGroup>
             </CardFooter>
@@ -54,9 +48,12 @@ import type { ModuleFormData } from '../interfaces';
 interface Props {
     routeName: string;
     form: InertiaForm<ModuleFormData>;
+    submitLabel?: string;
 }
 
-defineProps<Props>();
+withDefaults(defineProps<Props>(), {
+    submitLabel: 'Crear Módulo',
+});
 
 defineEmits<{
     submit: [];

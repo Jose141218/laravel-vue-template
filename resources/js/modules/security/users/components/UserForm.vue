@@ -132,33 +132,29 @@
             </CardContent>
 
             <CardFooter class="border-t p-6">
-                <ActionGroup
-                    gap="xl"
-                    class="w-full"
-                    aria-label="Acciones del formulario"
-                >
-                    <Button
-                        variant="outline"
-                        as-child
-                        :disabled="form.processing"
+                <slot name="actions">
+                    <ActionGroup
+                        gap="xl"
+                        class="w-full"
+                        aria-label="Acciones del formulario"
                     >
-                        <Link :href="route(`${routeName}index`)">Cancelar</Link>
-                    </Button>
-                    <Button
-                        type="submit"
-                        class="gap-2"
-                        :loading="form.processing"
-                    >
-                        <Save v-if="!form.processing" class="h-4 w-4" />
-                        <span>
-                            {{
-                                form.processing
-                                    ? 'Guardando...'
-                                    : 'Guardar Usuario'
-                            }}
-                        </span>
-                    </Button>
-                </ActionGroup>
+                        <Button
+                            variant="outline"
+                            as-child
+                            :disabled="form.processing"
+                        >
+                            <Link :href="route(`${routeName}index`)">Cancelar</Link>
+                        </Button>
+                        <Button
+                            type="submit"
+                            class="gap-2"
+                            :loading="form.processing"
+                        >
+                            <Save v-if="!form.processing" class="h-4 w-4" />
+                            <span>{{ resolvedSubmitLabel }}</span>
+                        </Button>
+                    </ActionGroup>
+                </slot>
             </CardFooter>
         </Card>
     </form>
@@ -191,11 +187,18 @@ interface Props {
     isEditing?: boolean;
     isRoleSelected: (name: string) => boolean;
     toggleRole: (name: string) => void;
+    submitLabel?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
     isEditing: false,
 });
+
+const resolvedSubmitLabel = computed(
+    () =>
+        props.submitLabel ??
+        (props.isEditing ? 'Guardar cambios' : 'Crear Usuario'),
+);
 
 defineEmits<{
     submit: [];

@@ -59,31 +59,29 @@
             </CardContent>
 
             <CardFooter class="border-t p-6">
-                <ActionGroup
-                    gap="xl"
-                    class="w-full"
-                    aria-label="Acciones del formulario"
-                >
-                    <Button
-                        variant="outline"
-                        as-child
-                        :disabled="form.processing"
+                <slot name="actions">
+                    <ActionGroup
+                        gap="xl"
+                        class="w-full"
+                        aria-label="Acciones del formulario"
                     >
-                        <Link :href="route(`${routeName}index`)">Cancelar</Link>
-                    </Button>
-                    <Button
-                        type="submit"
-                        class="gap-2"
-                        :loading="form.processing"
-                    >
-                        <Save v-if="!form.processing" class="h-4 w-4" />
-                        <span>
-                            {{
-                                form.processing ? 'Guardando...' : 'Guardar Rol'
-                            }}
-                        </span>
-                    </Button>
-                </ActionGroup>
+                        <Button
+                            variant="outline"
+                            as-child
+                            :disabled="form.processing"
+                        >
+                            <Link :href="route(`${routeName}index`)">Cancelar</Link>
+                        </Button>
+                        <Button
+                            type="submit"
+                            class="gap-2"
+                            :loading="form.processing"
+                        >
+                            <Save v-if="!form.processing" class="h-4 w-4" />
+                            <span>{{ submitLabel }}</span>
+                        </Button>
+                    </ActionGroup>
+                </slot>
             </CardFooter>
         </Card>
     </form>
@@ -114,9 +112,12 @@ interface Props {
     form: InertiaForm<RoleFormData>;
     modules: ModuleItem[];
     groupedPermissions: Record<string, PermissionItem[]>;
+    submitLabel?: string;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+    submitLabel: 'Crear Rol',
+});
 
 defineEmits<{
     submit: [];

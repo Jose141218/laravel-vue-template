@@ -77,13 +77,7 @@
                         :loading="form.processing"
                     >
                         <Save v-if="!form.processing" class="h-4 w-4" />
-                        <span>
-                            {{
-                                form.processing
-                                    ? 'Guardando...'
-                                    : 'Guardar Permiso'
-                            }}
-                        </span>
+                        <span>{{ submitLabel }}</span>
                     </Button>
                 </ActionGroup>
             </CardFooter>
@@ -113,9 +107,12 @@ interface Props {
     routeName: string;
     form: InertiaForm<PermissionFormData>;
     modules: ModuleOption[];
+    submitLabel?: string;
 }
 
-defineProps<Props>();
+withDefaults(defineProps<Props>(), {
+    submitLabel: 'Crear Permiso',
+});
 
 defineEmits<{
     submit: [];

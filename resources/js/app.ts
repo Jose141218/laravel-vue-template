@@ -17,7 +17,7 @@ createInertiaApp({
     resolve: (name) =>
         resolvePageComponent(
             `./modules/${name}.vue`,
-            import.meta.glob<DefineComponent>('./modules/**/*.vue'),
+            import.meta.glob<DefineComponent>('./modules/**/pages/**/*.vue'),
         ),
     layout: (name) => {
         switch (true) {

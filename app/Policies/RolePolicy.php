@@ -33,9 +33,14 @@ class RolePolicy
 
     /**
      * Determine whether the user can update the model.
+     * Prevents modification of the primary 'admin' role.
      */
     public function update(User $user, Role $role): bool
     {
+        if ($role->name === 'admin') {
+            return false;
+        }
+
         return $user->can('roles.edit');
     }
 

@@ -25,10 +25,11 @@ class PermissionPolicy
 
     /**
      * Determine whether the user can create models.
+     * Permissions are defined strictly in codebase, mutation via application is disabled.
      */
     public function create(User $user): bool
     {
-        return $user->can('permissions.create');
+        return false;
     }
 
     /**
@@ -36,7 +37,7 @@ class PermissionPolicy
      */
     public function update(User $user, Permission $permission): bool
     {
-        return $user->can('permissions.edit');
+        return false;
     }
 
     /**
@@ -44,6 +45,6 @@ class PermissionPolicy
      */
     public function delete(User $user, Permission $permission): bool
     {
-        return $user->can('permissions.delete');
+        return false;
     }
 }

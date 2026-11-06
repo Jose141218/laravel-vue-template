@@ -25,10 +25,11 @@ class ModulePolicy
 
     /**
      * Determine whether the user can create models.
+     * Modules are defined strictly in codebase, mutation via application is disabled.
      */
     public function create(User $user): bool
     {
-        return $user->can('modules.create');
+        return false;
     }
 
     /**
@@ -36,7 +37,7 @@ class ModulePolicy
      */
     public function update(User $user, Module $module): bool
     {
-        return $user->can('modules.edit');
+        return false;
     }
 
     /**
@@ -44,7 +45,7 @@ class ModulePolicy
      */
     public function delete(User $user, Module $module): bool
     {
-        return $user->can('modules.delete');
+        return false;
     }
 
     /**
@@ -52,6 +53,6 @@ class ModulePolicy
      */
     public function restore(User $user, Module $module): bool
     {
-        return $user->can('modules.restore');
+        return false;
     }
 }

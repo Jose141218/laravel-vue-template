@@ -10,6 +10,23 @@ class RoleRequest extends FormRequest
 {
     public function authorize(): bool
     {
+        $role = $this->route('role');
+        if ($role instanceof Role && $role->name === 'admin') {
+            return false;
+        }
+
+        if (is_numeric($role) || is_string($role)) {
+            $roleModel = Role::where('guard_name', 'web')
+                ->where(function ($query) use ($role) {
+                    $query->where('id', $role)->orWhere('name', $role);
+                })
+                ->first();
+
+            if ($roleModel && $roleModel->name === 'admin') {
+                return false;
+            }
+        }
+
         return true;
     }
 

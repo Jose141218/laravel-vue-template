@@ -4,16 +4,7 @@
 
     <ModuleLayout variant="index">
         <PageHeader :title="title"
-            description="Administra los módulos para agrupar permisos y funcionalidades del sistema.">
-            <template #actions>
-                <Button as-child class="gap-2">
-                    <Link :href="route(`${routeName}create`)">
-                        <Plus class="h-4 w-4" />
-                        <span>Nuevo Módulo</span>
-                    </Link>
-                </Button>
-            </template>
-        </PageHeader>
+            description="Administra los módulos para agrupar permisos y funcionalidades del sistema." />
 
         <Card>
             <CardHeader class="p-4 pb-2 sm:p-6 sm:pb-2">
@@ -35,12 +26,10 @@
 </template>
 
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
-import { Plus } from '@lucide/vue';
+import { Head } from '@inertiajs/vue3';
 import ConfirmDialog from '@/components/common/ConfirmDialog.vue';
 import PageHeader from '@/components/common/PageHeader.vue';
 import Pagination from '@/components/common/Pagination.vue';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { TableToolbar } from '@/components/ui/table';
 import { useFilters } from '@/composables/useFilters';

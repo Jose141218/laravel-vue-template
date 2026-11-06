@@ -5,16 +5,7 @@
         <PageHeader
             :title="title"
             description="Administra los permisos atómicos del sistema clasificados por módulo."
-        >
-            <template #actions>
-                <Button v-if="useCan('permissions.create')" as-child class="gap-2">
-                    <Link :href="route(`${routeName}create`)">
-                        <Plus class="h-4 w-4" />
-                        <span>Nuevo Permiso</span>
-                    </Link>
-                </Button>
-            </template>
-        </PageHeader>
+        />
 
         <Card>
             <CardHeader class="p-4 pb-2 sm:p-6 sm:pb-2">
@@ -22,34 +13,38 @@
                     v-model="filters"
                     :sort-options="sortOptions"
                     :total="permissions.meta.total"
-                    placeholder="Buscar permisos por nombre o descripción..."
+                    placeholder="Buscar por nombre o descripción de permiso..."
                     @clear="clearFilters"
                 >
-                    <TableFilterItem label="Módulo" for-id="filter-module">
-                        <Select
-                            :model-value="filters.module_key || 'all'"
-                            @update:model-value="
-                                filters.module_key =
-                                    $event === 'all' ? '' : String($event)
-                            "
+                    <template #filters>
+                        <TableFilterItem
+                            label="Módulo"
+                            :has-value="Boolean(filters.module_key)"
+                            @clear="filters.module_key = undefined"
                         >
-                            <SelectTrigger id="filter-module" class="h-9 w-full">
-                                <SelectValue placeholder="Todos los módulos" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="all">
-                                    Todos los módulos
-                                </SelectItem>
-                                <SelectItem
-                                    v-for="module in modules"
-                                    :key="module.key"
-                                    :value="module.key"
-                                >
-                                    {{ module.name }}
-                                </SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </TableFilterItem>
+                            <Select
+                                v-model="filters.module_key"
+                                class="w-full sm:w-[200px]"
+                            >
+                                <SelectTrigger class="w-full sm:w-[200px]">
+                                    <SelectValue
+                                        placeholder="Filtrar por módulo"
+                                    />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectItem
+                                            v-for="item in modules"
+                                            :key="item.key"
+                                            :value="item.key"
+                                        >
+                                            {{ item.name }}
+                                        </SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </TableFilterItem>
+                    </template>
                 </TableToolbar>
             </CardHeader>
 
@@ -70,7 +65,7 @@
         <ConfirmDialog
             v-model:open="isDeleteDialogOpen"
             title="¿Eliminar permiso?"
-            :description="`Se eliminará el permiso '${itemToDelete?.name}'. Esta acción desvinculará a los roles asociados.`"
+            :description="`Se eliminará el permiso '${itemToDelete?.name}'. Esta acción no se puede deshacer.`"
             :loading="isDeleting"
             @confirm="handleDelete"
             @cancel-delete="cancelDelete"
@@ -79,23 +74,21 @@
 </template>
 
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
-import { Plus } from '@lucide/vue';
+import { Head } from '@inertiajs/vue3';
 import ConfirmDialog from '@/components/common/ConfirmDialog.vue';
 import PageHeader from '@/components/common/PageHeader.vue';
 import Pagination from '@/components/common/Pagination.vue';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import {
     Select,
     SelectContent,
+    SelectGroup,
     SelectItem,
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
 import { TableFilterItem, TableToolbar } from '@/components/ui/table';
 import { useFilters } from '@/composables/useFilters';
-import { useCan } from '@/composables/usePermissions';
 import { useResourceDelete } from '@/composables/useResourceDelete';
 import type { ResourceCollection, SortOption } from '@/interfaces';
 import ModuleLayout from '@/layouts/ModuleLayout.vue';
@@ -107,7 +100,7 @@ import type {
 } from '../interfaces';
 
 const sortOptions: SortOption[] = [
-    { label: 'Permiso', value: 'name' },
+    { label: 'Nombre', value: 'name' },
     { label: 'Descripción', value: 'description' },
     { label: 'Módulo', value: 'module_key' },
     { label: 'Fecha de registro', value: 'created_at' },

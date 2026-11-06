@@ -6,11 +6,11 @@
                     <th>Permiso (Name)</th>
                     <th>Descripción</th>
                     <th>Módulo</th>
-                    <th class="text-right">Acciones</th>
+                    <th v-if="hasActions" class="text-right">Acciones</th>
                 </tr>
             </thead>
 
-            <TableSkeleton v-if="loading" :columns="4" :rows="5" />
+            <TableSkeleton v-if="loading" :columns="hasActions ? 4 : 3" :rows="5" />
 
             <tbody v-else-if="permissions.length > 0">
                 <tr v-for="item in permissions" :key="item.id">
@@ -38,10 +38,10 @@
                         </Badge>
                     </td>
 
-                    <td data-label="Acciones" class="text-right">
+                    <td v-if="hasActions" data-label="Acciones" class="text-right">
                         <ActionGroup>
                             <Button
-                                v-if="useCan('permissions.edit')"
+                                v-if="canEdit"
                                 variant="ghost"
                                 size="icon"
                                 class="cursor-pointer h-8 w-8 text-muted-foreground hover:text-foreground"
@@ -56,7 +56,7 @@
                             </Button>
 
                             <Button
-                                v-if="useCan('permissions.delete')"
+                                v-if="canDelete"
                                 variant="ghost"
                                 size="icon"
                                 class="cursor-pointer h-8 w-8 text-muted-foreground hover:text-destructive"
@@ -72,7 +72,7 @@
 
             <TableEmpty
                 v-else
-                :colspan="4"
+                :colspan="hasActions ? 4 : 3"
                 title="No se encontraron permisos"
                 description="No hay permisos registrados o ninguno coincide con los criterios de búsqueda actuales."
             />
@@ -83,6 +83,7 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 import { Pencil, Trash2 } from '@lucide/vue';
+import { computed } from 'vue';
 import ActionGroup from '@/components/common/ActionGroup.vue';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -103,4 +104,8 @@ withDefaults(defineProps<Props>(), {
 defineEmits<{
     confirmDelete: [item: Permission];
 }>();
+
+const canEdit = computed(() => useCan('permissions.edit'));
+const canDelete = computed(() => useCan('permissions.delete'));
+const hasActions = computed(() => canEdit.value || canDelete.value);
 </script>

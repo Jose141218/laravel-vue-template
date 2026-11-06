@@ -33,16 +33,9 @@ class PermissionSeeder extends Seeder
                 ],
                 'permissions' => [
                     'view' => 'Ver lista de permisos',
-                    'create' => 'Crear nuevos permisos',
-                    'edit' => 'Editar permisos existentes',
-                    'delete' => 'Eliminar permisos',
                 ],
                 'modules' => [
                     'view' => 'Ver lista de módulos',
-                    'create' => 'Crear nuevos módulos',
-                    'edit' => 'Editar módulos existentes',
-                    'delete' => 'Eliminar módulos',
-                    'restore' => 'Restaurar módulos eliminados',
                 ],
             ],
             'dash' => [
@@ -58,11 +51,16 @@ class PermissionSeeder extends Seeder
             ],
         ];
 
+        $validPermissions = [];
+
         foreach ($modules as $moduleKey => $entities) {
             foreach ($entities as $entity => $actions) {
                 foreach ($actions as $action => $description) {
+                    $permissionName = "{$entity}.{$action}";
+                    $validPermissions[] = $permissionName;
+
                     Permission::updateOrCreate(
-                        ['name' => "{$entity}.{$action}", 'guard_name' => 'web'],
+                        ['name' => $permissionName, 'guard_name' => 'web'],
                         [
                             'description' => $description,
                             'module_key' => $moduleKey,
@@ -71,5 +69,10 @@ class PermissionSeeder extends Seeder
                 }
             }
         }
+
+        // Delete obsolete permissions no longer defined in code
+        Permission::where('guard_name', 'web')
+            ->whereNotIn('name', $validPermissions)
+            ->delete();
     }
 }

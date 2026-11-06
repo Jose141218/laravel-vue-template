@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Security;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Security\PermissionRequest;
 use App\Http\Resources\Security\PermissionResource;
 use App\Models\Module;
 use App\Traits\HasTableFilters;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Attributes\Controllers\Authorize;
 use Inertia\Inertia;
@@ -53,78 +51,5 @@ class PermissionController extends Controller
             'routeName' => $this->routeName,
             'filters' => $filters,
         ]);
-    }
-
-    #[Authorize('create', Permission::class)]
-    public function create(): Response
-    {
-        $modules = Module::all(['key', 'name']);
-
-        return Inertia::render($this->source.'Create', [
-            'title' => 'Crear Permiso',
-            'modules' => $modules,
-            'routeName' => $this->routeName,
-        ]);
-    }
-
-    #[Authorize('create', Permission::class)]
-    public function store(PermissionRequest $request): RedirectResponse
-    {
-        Permission::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'module_key' => $request->module_key,
-            'guard_name' => 'web',
-        ]);
-
-        Inertia::flash('toast', [
-            'type' => 'success',
-            'message' => 'Permiso creado exitosamente.',
-        ]);
-
-        return to_route("{$this->routeName}index");
-    }
-
-    #[Authorize('update', 'permission')]
-    public function edit(Permission $permission): Response
-    {
-        $modules = Module::all(['key', 'name']);
-
-        return Inertia::render($this->source.'Edit', [
-            'title' => 'Editar Permiso',
-            'permission' => PermissionResource::make($permission),
-            'modules' => $modules,
-            'routeName' => $this->routeName,
-        ]);
-    }
-
-    #[Authorize('update', 'permission')]
-    public function update(PermissionRequest $request, Permission $permission): RedirectResponse
-    {
-        $permission->update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'module_key' => $request->module_key,
-        ]);
-
-        Inertia::flash('toast', [
-            'type' => 'success',
-            'message' => 'Permiso actualizado exitosamente.',
-        ]);
-
-        return to_route("{$this->routeName}index");
-    }
-
-    #[Authorize('delete', 'permission')]
-    public function destroy(Permission $permission): RedirectResponse
-    {
-        $permission->delete();
-
-        Inertia::flash('toast', [
-            'type' => 'success',
-            'message' => 'Permiso eliminado exitosamente.',
-        ]);
-
-        return to_route("{$this->routeName}index");
     }
 }

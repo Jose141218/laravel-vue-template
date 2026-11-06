@@ -62,7 +62,7 @@
                                 </DropdownMenuItem>
 
                                 <DropdownMenuItem
-                                    v-if="canEdit"
+                                    v-if="item.name !== 'admin' && canEdit"
                                     as-child
                                     class="cursor-pointer"
                                 >

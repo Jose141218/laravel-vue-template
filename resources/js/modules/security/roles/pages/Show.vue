@@ -12,7 +12,7 @@
                 </p>
             </template>
 
-            <template v-if="canEdit" #actions>
+            <template v-if="canEdit && role.name !== 'admin'" #actions>
                 <Button as-child class="cursor-pointer">
                     <Link :href="route(`${routeName}edit`, role.id)">
                         <Pencil class="mr-2 h-4 w-4" />

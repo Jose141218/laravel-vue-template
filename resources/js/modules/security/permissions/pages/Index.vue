@@ -4,7 +4,7 @@
     <ModuleLayout variant="index">
         <PageHeader
             :title="title"
-            description="Administra los permisos atómicos del sistema clasificados por módulo."
+            description="Consulta los permisos atómicos del sistema clasificados por módulo."
         />
 
         <Card>
@@ -53,7 +53,6 @@
                     :permissions="permissions.data"
                     :route-name="routeName"
                     :loading="isLoading"
-                    @confirm-delete="confirmDelete"
                 />
                 <Pagination
                     v-bind="permissions.meta"
@@ -61,21 +60,11 @@
                 />
             </CardContent>
         </Card>
-
-        <ConfirmDialog
-            v-model:open="isDeleteDialogOpen"
-            title="¿Eliminar permiso?"
-            :description="`Se eliminará el permiso '${itemToDelete?.name}'. Esta acción no se puede deshacer.`"
-            :loading="isDeleting"
-            @confirm="handleDelete"
-            @cancel-delete="cancelDelete"
-        />
     </ModuleLayout>
 </template>
 
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
-import ConfirmDialog from '@/components/common/ConfirmDialog.vue';
 import PageHeader from '@/components/common/PageHeader.vue';
 import Pagination from '@/components/common/Pagination.vue';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -89,7 +78,6 @@ import {
 } from '@/components/ui/select';
 import { TableFilterItem, TableToolbar } from '@/components/ui/table';
 import { useFilters } from '@/composables/useFilters';
-import { useResourceDelete } from '@/composables/useResourceDelete';
 import type { ResourceCollection, SortOption } from '@/interfaces';
 import ModuleLayout from '@/layouts/ModuleLayout.vue';
 import PermissionsTable from '../components/PermissionsTable.vue';
@@ -115,15 +103,6 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-
-const {
-    itemToDelete,
-    isDeleteDialogOpen,
-    isDeleting,
-    confirmDelete,
-    cancelDelete,
-    handleDelete,
-} = useResourceDelete<Permission>(props.routeName);
 
 const { filters, isLoading, clearFilters } = useFilters(
     props.filters,

@@ -1,39 +1,45 @@
 <template>
-
     <Head :title="title" />
 
     <ModuleLayout variant="index">
-        <PageHeader :title="title"
-            description="Administra los módulos para agrupar permisos y funcionalidades del sistema." />
+        <PageHeader
+            :title="title"
+            description="Consulta los módulos para agrupar permisos y funcionalidades del sistema."
+        />
 
         <Card>
             <CardHeader class="p-4 pb-2 sm:p-6 sm:pb-2">
-                <TableToolbar v-model="filters" :sort-options="sortOptions" :total="modules.meta.total"
-                    placeholder="Buscar por nombre o clave de módulo..." @clear="clearFilters" />
+                <TableToolbar
+                    v-model="filters"
+                    :sort-options="sortOptions"
+                    :total="modules.meta.total"
+                    placeholder="Buscar por nombre o clave de módulo..."
+                    @clear="clearFilters"
+                />
             </CardHeader>
 
             <CardContent class="p-0 sm:p-6 sm:pt-0">
-                <ModulesTable :modules="modules.data" :route-name="routeName" :loading="isLoading"
-                    @confirm-delete="confirmDelete" />
-                <Pagination v-bind="modules.meta" v-model:loading="isLoading" />
+                <ModulesTable
+                    :modules="modules.data"
+                    :route-name="routeName"
+                    :loading="isLoading"
+                />
+                <Pagination
+                    v-bind="modules.meta"
+                    v-model:loading="isLoading"
+                />
             </CardContent>
         </Card>
-
-        <ConfirmDialog v-model:open="isDeleteDialogOpen" title="¿Eliminar módulo?"
-            :description="`Se eliminará el módulo '${itemToDelete?.name}'. Esta acción no se puede deshacer.`"
-            :loading="isDeleting" @confirm="handleDelete" @cancel-delete="cancelDelete" />
     </ModuleLayout>
 </template>
 
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
-import ConfirmDialog from '@/components/common/ConfirmDialog.vue';
 import PageHeader from '@/components/common/PageHeader.vue';
 import Pagination from '@/components/common/Pagination.vue';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { TableToolbar } from '@/components/ui/table';
 import { useFilters } from '@/composables/useFilters';
-import { useResourceDelete } from '@/composables/useResourceDelete';
 import type { ResourceCollection, SortOption } from '@/interfaces';
 import ModuleLayout from '@/layouts/ModuleLayout.vue';
 import ModulesTable from '../components/ModulesTable.vue';
@@ -53,15 +59,6 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-
-const {
-    itemToDelete,
-    isDeleteDialogOpen,
-    isDeleting,
-    confirmDelete,
-    cancelDelete,
-    handleDelete,
-} = useResourceDelete<Module>(props.routeName);
 
 const { filters, isLoading, clearFilters } = useFilters(
     props.filters,

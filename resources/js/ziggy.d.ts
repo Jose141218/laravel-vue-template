@@ -139,53 +139,7 @@ declare module 'ziggy-js' {
             },
         ];
         'security.permissions.index': [];
-        'security.permissions.create': [];
-        'security.permissions.store': [];
-        'security.permissions.edit': [
-            {
-                name: 'permission';
-                required: true;
-                binding: 'id';
-            },
-        ];
-        'security.permissions.update': [
-            {
-                name: 'permission';
-                required: true;
-                binding: 'id';
-            },
-        ];
-        'security.permissions.destroy': [
-            {
-                name: 'permission';
-                required: true;
-                binding: 'id';
-            },
-        ];
         'security.modules.index': [];
-        'security.modules.create': [];
-        'security.modules.store': [];
-        'security.modules.edit': [
-            {
-                name: 'module';
-                required: true;
-                binding: 'id';
-            },
-        ];
-        'security.modules.update': [
-            {
-                name: 'module';
-                required: true;
-                binding: 'id';
-            },
-        ];
-        'security.modules.destroy': [
-            {
-                name: 'module';
-                required: true;
-                binding: 'id';
-            },
-        ];
         'storage.local': [
             {
                 name: 'path';

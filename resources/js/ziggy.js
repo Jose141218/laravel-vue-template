@@ -208,61 +208,9 @@ const Ziggy = {
             uri: 'security\/permissions',
             methods: ['GET', 'HEAD'],
         },
-        'security.permissions.create': {
-            uri: 'security\/permissions\/create',
-            methods: ['GET', 'HEAD'],
-        },
-        'security.permissions.store': {
-            uri: 'security\/permissions',
-            methods: ['POST'],
-        },
-        'security.permissions.edit': {
-            uri: 'security\/permissions\/{permission}\/edit',
-            methods: ['GET', 'HEAD'],
-            parameters: ['permission'],
-            bindings: { permission: 'id' },
-        },
-        'security.permissions.update': {
-            uri: 'security\/permissions\/{permission}',
-            methods: ['PUT', 'PATCH'],
-            parameters: ['permission'],
-            bindings: { permission: 'id' },
-        },
-        'security.permissions.destroy': {
-            uri: 'security\/permissions\/{permission}',
-            methods: ['DELETE'],
-            parameters: ['permission'],
-            bindings: { permission: 'id' },
-        },
         'security.modules.index': {
             uri: 'security\/modules',
             methods: ['GET', 'HEAD'],
-        },
-        'security.modules.create': {
-            uri: 'security\/modules\/create',
-            methods: ['GET', 'HEAD'],
-        },
-        'security.modules.store': {
-            uri: 'security\/modules',
-            methods: ['POST'],
-        },
-        'security.modules.edit': {
-            uri: 'security\/modules\/{module}\/edit',
-            methods: ['GET', 'HEAD'],
-            parameters: ['module'],
-            bindings: { module: 'id' },
-        },
-        'security.modules.update': {
-            uri: 'security\/modules\/{module}',
-            methods: ['PUT', 'PATCH'],
-            parameters: ['module'],
-            bindings: { module: 'id' },
-        },
-        'security.modules.destroy': {
-            uri: 'security\/modules\/{module}',
-            methods: ['DELETE'],
-            parameters: ['module'],
-            bindings: { module: 'id' },
         },
         'storage.local': {
             uri: 'storage\/{path}',

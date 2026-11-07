@@ -19,7 +19,7 @@ describe('useResourceDelete composable', () => {
 
     test('initializes with default state', () => {
         const { itemToDelete, isDeleteDialogOpen, isDeleting } =
-            useResourceDelete('security.modules.');
+            useResourceDelete('security.roles.');
 
         expect(itemToDelete.value).toBeNull();
         expect(isDeleteDialogOpen.value).toBe(false);
@@ -28,11 +28,11 @@ describe('useResourceDelete composable', () => {
 
     test('opens dialog on confirmDelete and sets item', () => {
         const { itemToDelete, isDeleteDialogOpen, confirmDelete } =
-            useResourceDelete('security.modules.');
+            useResourceDelete('security.roles.');
 
-        confirmDelete({ id: 5, name: 'Test Module' });
+        confirmDelete({ id: 5, name: 'Test Role' });
 
-        expect(itemToDelete.value).toEqual({ id: 5, name: 'Test Module' });
+        expect(itemToDelete.value).toEqual({ id: 5, name: 'Test Role' });
         expect(isDeleteDialogOpen.value).toBe(true);
     });
 
@@ -42,9 +42,9 @@ describe('useResourceDelete composable', () => {
             isDeleteDialogOpen,
             confirmDelete,
             cancelDelete,
-        } = useResourceDelete('security.modules.');
+        } = useResourceDelete('security.roles.');
 
-        confirmDelete({ id: 5, name: 'Test Module' });
+        confirmDelete({ id: 5, name: 'Test Role' });
         cancelDelete();
 
         expect(itemToDelete.value).toBeNull();
@@ -53,14 +53,14 @@ describe('useResourceDelete composable', () => {
 
     test('deletes item with Ziggy route name', () => {
         const { confirmDelete, handleDelete, isDeleting } =
-            useResourceDelete('security.modules.');
+            useResourceDelete('security.roles.');
 
-        confirmDelete({ id: 10, name: 'Module 10' });
+        confirmDelete({ id: 10, name: 'Role 10' });
         handleDelete();
 
         expect(isDeleting.value).toBe(true);
         expect((globalThis as any).route).toHaveBeenCalledWith(
-            'security.modules.destroy',
+            'security.roles.destroy',
             10,
         );
         expect(mockDelete).toHaveBeenCalledWith(
